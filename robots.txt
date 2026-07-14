@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kuznia-figur.example/sitemap.xml
+Sitemap: https://kuzniafigur.pl/sitemap.xml
