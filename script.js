@@ -24,6 +24,18 @@
     });
   });
 
+  const mainImage = document.getElementById("product-main-image");
+  if (mainImage) {
+    document.querySelectorAll(".thumb-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        mainImage.src = btn.dataset.full;
+        mainImage.alt = btn.dataset.alt;
+        document.querySelectorAll(".thumb-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+  }
+
   document.querySelectorAll("[data-open-modal]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const modal = document.getElementById(btn.dataset.openModal);
