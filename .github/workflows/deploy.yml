@@ -1,0 +1,29 @@
+name: Deploy to home.pl
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare deploy bundle
+        run: |
+          mkdir dist
+          cp -r 404.html favicon.svg images index.html linoskoczek.html robots.txt script.js sitemap.xml styles.css dist/
+
+      - name: Deploy over SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          username: serwer2691768
+          server: serwer2691768.hosting-home.pl
+          port: '22'
+          password: ${{ secrets.HOMEPL_SFTP_PASSWORD }}
+          local_path: './dist/*'
+          remote_path: '/public_html'
+          sftp_only: true
+          delete_remote_files: false
