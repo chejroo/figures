@@ -160,6 +160,7 @@ button { font-family: inherit; }
 .btn-nav { font-size: 13px; padding: 9px 16px; }
 .btn-lg { font-size: 16px; padding: 16px 34px; }
 .btn-block { width: 100%; display: block; padding: 18px 28px; }
+.btn-form { font-size: 15px; padding: 14px 26px; }
 
 /* hero */
 
