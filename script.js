@@ -63,14 +63,15 @@
       const submitBtn = form.querySelector("button[type=submit]");
       if (submitBtn) submitBtn.disabled = true;
 
-      fetch("https://formsubmit.co/ajax/kontakt@kuzniafigur.pl", {
+      const data = new FormData(form);
+      data.set("figurka", figure);
+      data.set("_subject", `Kuźnia Figur — zapytanie o dostępność: ${figure}`);
+      data.delete("company"); // honeypot field, already checked above
+
+      fetch("https://formspree.io/f/mbdnloeg", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          email: form.elements.email.value,
-          figurka: figure,
-          _subject: `Kuźnia Figur — zapytanie o dostępność: ${figure}`,
-        }),
+        body: data,
+        headers: { Accept: "application/json" },
       })
         .then((res) => {
           if (!res.ok) throw new Error("submit failed");
