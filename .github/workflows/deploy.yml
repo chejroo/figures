@@ -19,11 +19,11 @@ jobs:
       - name: Deploy over SFTP
         uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
-          username: serwer2691768
+          username: ftpuser1@kuzniafigur.pl
           server: serwer2691768.hosting-home.pl
-          port: '22'
+          port: "22"
           password: ${{ secrets.HOMEPL_SFTP_PASSWORD }}
-          local_path: './dist/*'
-          remote_path: '/public_html'
+          local_path: "./dist/*"
+          remote_path: "/public_html"
           sftp_only: true
           delete_remote_files: false
