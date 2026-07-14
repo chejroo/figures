@@ -240,6 +240,13 @@ button { font-family: inherit; }
   align-items: center;
   justify-content: center;
 }
+.product-card.coming-soon {
+  cursor: pointer;
+}
+.product-card.coming-soon:hover,
+.product-card.coming-soon:focus-visible {
+  border-color: var(--accent-border);
+}
 
 .product-card-body { padding: 18px; }
 .product-card-name { color: var(--text); font-weight: 600; font-size: 16px; }
