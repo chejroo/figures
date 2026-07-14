@@ -59,14 +59,31 @@
       const honeypot = form.elements.company;
       if (honeypot && honeypot.value) return;
 
-      // TODO(lead-capture): this only shows a thank-you message and fires a
-      // GA4 event — no email is sent or stored anywhere yet. Wire the actual
-      // submission (e.g. a Formspree endpoint or Google Form POST) here.
-      track("lead_submit", { figure: form.dataset.figure || "unknown" });
+      const figure = form.dataset.figure || "unknown";
+      const submitBtn = form.querySelector("button[type=submit]");
+      if (submitBtn) submitBtn.disabled = true;
 
-      form.hidden = true;
-      const success = form.parentElement.querySelector(".form-success");
-      if (success) success.hidden = false;
+      fetch("https://formsubmit.co/ajax/kontakt@kuzniafigur.pl", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          email: form.elements.email.value,
+          figurka: figure,
+          _subject: `Kuźnia Figur — zapytanie o dostępność: ${figure}`,
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("submit failed");
+          track("lead_submit", { figure });
+          form.hidden = true;
+          const success = form.parentElement.querySelector(".form-success");
+          if (success) success.hidden = false;
+        })
+        .catch(() => {
+          if (submitBtn) submitBtn.disabled = false;
+          track("lead_submit_error", { figure });
+          alert("Coś poszło nie tak przy wysyłce. Spróbuj ponownie albo napisz bezpośrednio na kontakt@kuzniafigur.pl.");
+        });
     });
   });
 
